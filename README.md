@@ -1,1 +1,1 @@
-Eh, why not?
+Eh, why not? Took direction from [this](https://inst.eecs.berkeley.edu/~cs61c/sp15/hw/01/hw1.html) statement.

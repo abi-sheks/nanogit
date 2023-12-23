@@ -4,3 +4,6 @@ compile:main.c
 
 run:
 	./vcs
+
+clean:
+	rm -rf .nanogit

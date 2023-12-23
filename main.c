@@ -16,7 +16,11 @@ int main(int argc, char**argv)
         }
         else if(strcmp(argv[1], "add") == 0)
         {
-            fprintf(stdout, "add logic here\n");
+            add(argv[2]);
+        }
+        else if(strcmp(argv[1], "rm") == 0)
+        {
+            rm(argv[2]);
         }
     }
     return 0;
