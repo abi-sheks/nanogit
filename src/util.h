@@ -1,35 +1,52 @@
-#include <unistd.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <sys/stat.h>
-#include <sys/types.h>
+#pragma once
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <filesystem>
+#include <stdexcept>
 
-void fs_mkdir(const char *dir)
+namespace fs = std::filesystem;
+
+void fs_mkdir(const std::string dir)
 {
-    struct stat st = {0};
-    if (stat(dir, &st) == -1)
+    if (fs::status(dir).type() == fs::file_type::not_found)
     {
-        mkdir(dir, 0700);
+        fs::create_directory(dir);
     }
     else
     {
-        exit(EXIT_FAILURE);
+        throw std::runtime_error("already exists");
     }
 }
 
-void fs_rm(const char *filename)
+void fs_rm(const std::string filename)
 {
-    if (remove(filename) != 0)
+    if (!fs::remove(filename))
     {
-        exit(EXIT_FAILURE);
+        throw std::runtime_error("Could not delete");
     }
 }
 
-bool is_file(const char *filename)
+std::string read_string_from_file(const std::string filename)
 {
-    struct stat buffer;
-    struct stat b2;
-    stat(filename, &b2);
-    //checks whether file exists and is a file
-    return (stat(filename, &buffer) == 0) && S_ISREG(b2.st_mode);
+    std::ifstream fp;
+    fp.open(filename);
+    std::string result;
+    std::getline(fp, result);
+    fp.close();
+    return result;
+}
+void write_string_to_file(const std::string filename, const std::string str)
+{
+    std::ofstream fp;
+    fp.open(filename);
+    fp << str;
+    fp.close();
+}
+
+bool is_exists(const std::string filename)
+{
+    // checks whether file exists and is a file
+    auto file_status = fs::status(filename).type();
+    return file_status != fs::file_type::not_found;
 }

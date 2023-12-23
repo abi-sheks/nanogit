@@ -1,6 +1,6 @@
-compile:main.c
+compile:main.cpp
 
-	gcc -o vcs main.c
+	g++ -o vcs main.cpp
 
 run:
 	./vcs
