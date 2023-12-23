@@ -13,23 +13,27 @@ int main(int argc, char **argv)
         auto arg_as_string = std::string(argv[1]);
         if (arg_as_string == "init")
         {
-            std::cout << "Happening?";
             init();
         }
         else if (arg_as_string == "add")
         {
-            std::cout << "Happening?";
             add(std::string(argv[2]));
         }
         else if (arg_as_string == "rm")
         {
-            std::cout << "Happening?";
             rm(std::string(argv[2]));
         }
         else if (arg_as_string == "commit")
         {
-            std::cout << "Happening?";
-            commit(std::string(argv[2]));
+            if (argc != 4)
+            {
+                throw std::invalid_argument("ERROR : Number of arguments incorrect");
+            }
+            if (std::string(argv[2]) != "-m")
+            {
+                throw std::invalid_argument("ERROR : use -m to specify message");
+            }
+            commit(std::string(argv[3]));
         }
     }
     return 0;
