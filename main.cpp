@@ -23,6 +23,21 @@ int main(int argc, char **argv)
         {
             rm(std::string(argv[2]));
         }
+        else if (arg_as_string == "branch")
+        {
+            branch();
+        }
+        else if(arg_as_string == "checkout")
+        {
+            if(std::string(argv[2]) == "-b")
+            {
+                checkout_new(std::string(argv[3]));
+            }
+            else
+            {
+                checkout(std::string(argv[2]));
+            }
+        }
         else if (arg_as_string == "commit")
         {
             if (argc != 4)
